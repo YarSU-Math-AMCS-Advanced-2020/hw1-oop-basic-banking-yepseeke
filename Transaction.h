@@ -1,52 +1,25 @@
 #pragma once
-#include "DebitAccount.h"
-
-enum class Status { OK, DIFFERENT_CURRENCY, OUT_OF_LIMITS, NOT_ENOUGH_MONEY};
+#include "Card.h"
+#include "Date.h"
 
 class Transaction
 {
 public:
-	Transaction(DebitAccount* from, DebitAccount* to, double amount)
-	{
-		this->from = from;
-		this->to = to;
-		this->amount = amount;
-	}
 
-	Transaction(Card* from, Card* to, double amount)
-	{
-		this->from = from->get_debit_account();
-		this->to = to->get_debit_account();
-		this->amount = amount;
-	}
+	enum class Status { OK, DIFFERENT_CURRENCY, OUT_OF_LIMITS, NOT_ENOUGH_MONEY, UNKNOWN };
 
-	void start()
-	{
-		if (from->get_balance() < amount)
-		{
-			status = Status::NOT_ENOUGH_MONEY;
-			return;
-		}
-		if (from->get_currency() != to->get_currency())
-		{
-			status = Status::DIFFERENT_CURRENCY;
-			return;
-		}
-		from->decrease(amount);
-		to->increase(amount);
-		status = Status::OK;
-	}
+	Transaction(DebitAccount* from, DebitAccount* to, double amount);
+	Transaction(Card* from, Card* to, double amount);
 
-	Status get_status()
-	{
-		return status;
-	}
+	void start();
+
+	Date get_date() const { return date; }
+	Status get_status() const { return status; }
 
 private:
 	DebitAccount* from;
 	DebitAccount* to;
-	Date date;/////
+	Date date;
 	double amount;
-	Status status;
+	Status status = Status::UNKNOWN;
 };
-

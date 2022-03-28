@@ -1,36 +1,31 @@
 #pragma once
+#include <iostream>
 #include <string>
 #include <vector>
+#include "Address.h"
 #include "DebitAccount.h"
 #include "Card.h"
-#include "Address.h"
-
-using namespace std;
 
 class ClientBase
 {
 public:
+
 	ClientBase() {};
-	ClientBase(Address address, string phone_number);
-	
-	void create_account(Currency currency);
-	void create_card(int account_id, PaymentSystem payment_system, Date expiration_time);
+	ClientBase(Address address, std::string phone_number);
 
-	vector<DebitAccount> get_debit_accounts()
-	{
-		vector<DebitAccount> t;
-		for (int i = 0; i < debit_accounts.size(); i++)
-			t.push_back(*debit_accounts[i]);
-		return t;
-	}
+	void create_debit_account(DebitAccount::Currency currency);
+	void create_card(DebitAccount* debit_account, Card::PaymentSystem payment_system);
 
-	Address get_address() { return address; }
-	string get_phone_number() { return phone_number; }
+	vector<DebitAccount> get_debit_accounts();
+	DebitAccount* get_debit_account(int account_id);
+	Card* get_card(DebitAccount* debit_account);
+	Address get_address() const { return address; }
+	string get_phone_number() const { return phone_number; }
 
 	void set_address(Address address) { this->address = address; }
 	void set_phone_number(string phone_number) { this->phone_number = phone_number; }
 
-private:
+protected:
 	Address address;
 	string phone_number;
 	vector<DebitAccount*> debit_accounts;

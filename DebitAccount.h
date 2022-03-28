@@ -1,18 +1,22 @@
 #pragma once
-#include "Card.h"
+#include <iostream>
 
-enum class Currency { USD, EURO, RUB };
+using namespace std;
 
 class DebitAccount
 {
 public:
+
+	enum class Currency { USD, EURO, RUB };
+
 	DebitAccount(Currency currency = Currency::RUB)
 	{
 		this->currency = currency;
 	}
 
-	double get_balance() { return balance; }
-	Currency get_currency() { return currency; }
+	double get_balance() const { return balance; }
+	Currency get_currency() const { return currency; }
+	string get_currency_string() const;
 
 	void increase(double amount) { balance += amount; };
 	void decrease(double amount) { balance -= amount; };
@@ -22,6 +26,6 @@ public:
 
 private:
 	double balance = 0;
-	Currency currency;
+	Currency currency = Currency::RUB;
 };
 
