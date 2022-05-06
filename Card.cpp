@@ -10,3 +10,11 @@ Card::Card(DebitAccount* debit_account, PaymentSystem payment_system, Date expir
 {
 	this->expiration_time = expiration_time;
 }
+
+bool Card::set_new_debit_account(DebitAccount* debit_account)
+{
+	if (debit_account->get_card_status())
+		return false;
+	this->debit_account = debit_account;
+	return true;
+}

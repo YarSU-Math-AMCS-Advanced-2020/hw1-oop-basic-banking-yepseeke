@@ -5,12 +5,15 @@ int main()
 	Individual new_user;
 	double amount;
 	ATM atm(Address(), "123", 132312, DebitAccount::Currency::RUB);
-	new_user.create_new_individual();
+	//new_user.create_new_individual();
 
 	system("cls");
 	new_user.create_debit_account(choose_currency());
 
 	new_user.create_card(new_user.get_debit_account(0), choose_payment_system());
+	
+
+	cout << new_user.get_debit_accounts().size();
 
 	cout << "Your balance: " << new_user.get_debit_account(0)->get_balance() << " " << new_user.get_debit_account(0)->get_currency_string() << endl;
 	Sleep(1000);
@@ -66,6 +69,13 @@ int main()
 		cout << "Success. You've send " << amount << " " << new_user.get_debit_account(0)->get_currency_string() << endl << endl;
 
 	cout << "Your balance: " << new_user.get_debit_account(0)->get_balance() << " " << new_user.get_debit_account(0)->get_currency_string() << endl;
+	Sleep(1000);
+	system("cls");
+
+	if (new_user.close_debit_account(0)) 
+		cout << "Your debit account has been closed\n";
+	else
+		cout << "Error occurred during debit account closure\n";
 	Sleep(1000);
 	system("cls");
 }

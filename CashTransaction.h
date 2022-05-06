@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "ATM.h"
 #include "Address.h"
 #include "Date.h"
@@ -29,4 +28,3 @@ private:
 	Status status;
 	ATM atm;
 };
-

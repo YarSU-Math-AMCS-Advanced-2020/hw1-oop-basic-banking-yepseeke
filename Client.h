@@ -5,6 +5,7 @@
 #include "Address.h"
 #include "DebitAccount.h"
 #include "Card.h"
+#include "CashTransaction.h"
 
 class ClientBase
 {
@@ -14,7 +15,8 @@ public:
 	ClientBase(Address address, std::string phone_number);
 
 	void create_debit_account(DebitAccount::Currency currency);
-	void create_card(DebitAccount* debit_account, Card::PaymentSystem payment_system);
+	bool create_card(DebitAccount* debit_account, Card::PaymentSystem payment_system);
+	bool close_debit_account(int account_id);
 
 	vector<DebitAccount> get_debit_accounts();
 	DebitAccount* get_debit_account(int account_id);

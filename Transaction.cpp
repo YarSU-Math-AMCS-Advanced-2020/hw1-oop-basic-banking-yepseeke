@@ -26,6 +26,11 @@ void Transaction::start()
 		status = Status::DIFFERENT_CURRENCY;
 		return;
 	}
+	if (from->get_limit() <= amount)
+	{
+		status = Status::OUT_OF_LIMITS;
+		return;
+	}
 	from->decrease(amount);
 	to->increase(amount);
 	status = Status::OK;
